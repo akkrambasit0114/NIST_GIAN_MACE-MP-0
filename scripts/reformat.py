@@ -63,11 +63,11 @@ def reformat(df):
     )
     converted_df = pd.DataFrame(converted_data)
     converted_df["energy"] = converted_df["energy"].astype(float)
-    converted_df.to_json("data/MoTaNbTi/MoTaNbTi.jsonl", lines=True, orient="records")
+    converted_df.to_json("/home/insomniac/Desktop/MACE/NIST_GIAN_MACE-MP-0/data/MoTaNbTi/MoTaNbTi.jsonl", lines=True, orient="records")
     return converted_df
 
 
 if __name__ == "__main__":
     # first dump bson data to json-lines
-    df = pd.read_json("data/MoTaNbTi/output.json", lines=True)
+    df = pd.read_json("/home/insomniac/Desktop/MACE/NIST_GIAN_MACE-MP-0/data/output.json", lines=True)
     df_modified = reformat(df)

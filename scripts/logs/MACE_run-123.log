@@ -1,0 +1,498 @@
+2024-07-12 10:42:25.368 INFO: MACE version: 0.3.5
+2024-07-12 10:42:25.368 INFO: Configuration: Namespace(config=None, name='MACE', seed=123, log_dir='logs', model_dir='.', checkpoints_dir='checkpoints', results_dir='results', downloads_dir='downloads', device='cpu', default_dtype='float64', distributed=False, log_level='INFO', error_table='PerAtomMAE', model='MACE', r_max=6.0, radial_type='bessel', num_radial_basis=8, num_cutoff_basis=5, pair_repulsion=False, distance_transform='None', interaction='RealAgnosticResidualInteractionBlock', interaction_first='RealAgnosticResidualInteractionBlock', max_ell=3, correlation=3, num_interactions=2, MLP_irreps='16x0e', radial_MLP='[64, 64, 64]', hidden_irreps='128x0e + 128x1o', num_channels=64, max_L=0, gate='silu', scaling='rms_forces_scaling', avg_num_neighbors=1, compute_avg_num_neighbors=True, compute_stress=False, compute_forces=True, train_file='/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz', valid_file=None, valid_fraction=0.05, test_file='/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz', test_dir=None, multi_processed_test=False, num_workers=0, pin_memory=True, atomic_numbers=None, mean=None, std=None, statistics_file=None, E0s='average', keep_isolated_atoms=False, energy_key='TotEnergy', forces_key='force', virials_key='virials', stress_key='stress', dipole_key='dipole', charges_key='charges', loss='weighted', forces_weight=1000.0, swa_forces_weight=100.0, energy_weight=10.0, swa_energy_weight=1000.0, virials_weight=1.0, swa_virials_weight=10.0, stress_weight=1.0, swa_stress_weight=10.0, dipole_weight=1.0, swa_dipole_weight=1.0, config_type_weights='{"Default":1.0}', huber_delta=0.01, optimizer='adam', beta=0.9, batch_size=2, valid_batch_size=4, lr=0.01, swa_lr=0.001, weight_decay=5e-07, amsgrad=True, scheduler='ReduceLROnPlateau', lr_factor=0.8, scheduler_patience=15, lr_scheduler_gamma=0.9993, swa=True, start_swa=400, ema=True, ema_decay=0.99, max_num_epochs=800, patience=30, foundation_model=None, foundation_model_readout=True, eval_interval=4, keep_checkpoints=False, save_all_checkpoints=False, restart_latest=True, save_cpu=True, clip_grad=10.0, wandb=False, wandb_dir=None, wandb_project='', wandb_entity='', wandb_name='', wandb_log_hypers=['num_channels', 'max_L', 'correlation', 'lr', 'swa_lr', 'weight_decay', 'batch_size', 'max_num_epochs', 'start_swa', 'energy_weight', 'forces_weight'])
+2024-07-12 10:42:25.368 INFO: Using CPU
+2024-07-12 10:42:25.443 INFO: Current Git commit: 1c27f0862826c5dada3be5dcdade6046d55c0b2f
+2024-07-12 10:42:28.209 INFO: Since ASE version 3.23.0b1, using stress_key 'stress' is no longer safe when communicating between MACE and ASE. We recommend using a different key, rewriting energies to 'REF_stress'. You need to use --stress_key='REF_stress', to tell the key name chosen.
+2024-07-12 10:42:28.461 INFO: Loaded 18870 training configurations from '/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz'
+2024-07-12 10:42:28.461 INFO: Using random 5.0% of training set for validation
+2024-07-12 10:42:31.140 INFO: Since ASE version 3.23.0b1, using stress_key 'stress' is no longer safe when communicating between MACE and ASE. We recommend using a different key, rewriting energies to 'REF_stress'. You need to use --stress_key='REF_stress', to tell the key name chosen.
+2024-07-12 10:42:31.393 INFO: Loaded 18870 test configurations from '/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz'
+2024-07-12 10:42:31.393 INFO: Total number of configurations: train=17927, valid=943, tests=[Default: 18870]
+2024-07-12 10:42:31.452 INFO: AtomicNumberTable: (22, 41, 42, 73)
+2024-07-12 10:42:31.452 INFO: Atomic Energies not in training file, using command line argument E0s
+2024-07-12 10:42:31.452 INFO: Computing average Atomic Energies using least squares regression
+2024-07-12 10:42:31.516 INFO: Atomic energies: [0.0, 0.0, 0.0, 0.0]
+2024-07-12 10:42:40.808 INFO: WeightedEnergyForcesLoss(energy_weight=10.000, forces_weight=1000.000)
+2024-07-12 10:42:43.640 INFO: Average number of neighbors: 20.644293179871337
+2024-07-12 10:42:43.640 INFO: Selected the following outputs: {'energy': True, 'forces': True, 'virials': False, 'stress': False, 'dipoles': False}
+2024-07-12 10:42:46.247 WARNING: Standard deviation of the scaling is zero, Changing to no scaling
+2024-07-12 10:42:46.253 INFO: Building model
+2024-07-12 10:42:46.254 INFO: Hidden irreps: 64x0e
+2024-07-12 10:42:46.849 INFO: Using stochastic weight averaging (after 400 epochs) with energy weight : 1000.0, forces weight : 100.0 and learning rate : 0.001
+2024-07-12 10:42:46.900 WARNING: Cannot find checkpoint with tag 'MACE_run-123' in 'checkpoints'
+2024-07-12 10:42:46.901 INFO: ScaleShiftMACE(
+  (node_embedding): LinearNodeEmbeddingBlock(
+    (linear): Linear(4x0e -> 64x0e | 256 weights)
+  )
+  (radial_embedding): RadialEmbeddingBlock(
+    (bessel_fn): BesselBasis(r_max=6.0, num_basis=8, trainable=False)
+    (cutoff_fn): PolynomialCutoff(p=5.0, r_max=6.0)
+  )
+  (spherical_harmonics): SphericalHarmonics()
+  (atomic_energies_fn): AtomicEnergiesBlock(energies=[0.0000, 0.0000, 0.0000, 0.0000])
+  (interactions): ModuleList(
+    (0): RealAgnosticInteractionBlock(
+      (linear_up): Linear(64x0e -> 64x0e | 4096 weights)
+      (conv_tp): TensorProduct(64x0e x 1x0e+1x1o+1x2e+1x3o -> 64x0e+64x1o+64x2e+64x3o | 256 paths | 256 weights)
+      (conv_tp_weights): FullyConnectedNet[8, 64, 64, 64, 256]
+      (linear): Linear(64x0e+64x1o+64x2e+64x3o -> 64x0e+64x1o+64x2e+64x3o | 16384 weights)
+      (skip_tp): FullyConnectedTensorProduct(64x0e+64x1o+64x2e+64x3o x 4x0e -> 64x0e+64x1o+64x2e+64x3o | 65536 paths | 65536 weights)
+      (reshape): reshape_irreps()
+    )
+    (1): RealAgnosticResidualInteractionBlock(
+      (linear_up): Linear(64x0e -> 64x0e | 4096 weights)
+      (conv_tp): TensorProduct(64x0e x 1x0e+1x1o+1x2e+1x3o -> 64x0e+64x1o+64x2e+64x3o | 256 paths | 256 weights)
+      (conv_tp_weights): FullyConnectedNet[8, 64, 64, 64, 256]
+      (linear): Linear(64x0e+64x1o+64x2e+64x3o -> 64x0e+64x1o+64x2e+64x3o | 16384 weights)
+      (skip_tp): FullyConnectedTensorProduct(64x0e x 4x0e -> 64x0e | 16384 paths | 16384 weights)
+      (reshape): reshape_irreps()
+    )
+  )
+  (products): ModuleList(
+    (0-1): 2 x EquivariantProductBasisBlock(
+      (symmetric_contractions): SymmetricContraction(
+        (contractions): ModuleList(
+          (0): Contraction(
+            (contractions_weighting): ModuleList(
+              (0-1): 2 x GraphModule()
+            )
+            (contractions_features): ModuleList(
+              (0-1): 2 x GraphModule()
+            )
+            (weights): ParameterList(
+                (0): Parameter containing: [torch.float64 of size 4x4x64]
+                (1): Parameter containing: [torch.float64 of size 4x1x64]
+            )
+            (graph_opt_main): GraphModule()
+          )
+        )
+      )
+      (linear): Linear(64x0e -> 64x0e | 4096 weights)
+    )
+  )
+  (readouts): ModuleList(
+    (0): LinearReadoutBlock(
+      (linear): Linear(64x0e -> 1x0e | 64 weights)
+    )
+    (1): NonLinearReadoutBlock(
+      (linear_1): Linear(64x0e -> 16x0e | 1024 weights)
+      (non_linearity): Activation [x] (16x0e -> 16x0e)
+      (linear_2): Linear(16x0e -> 1x0e | 16 weights)
+    )
+  )
+  (scale_shift): ScaleShiftBlock(scale=1.000000, shift=0.000000)
+)
+2024-07-12 10:42:46.902 INFO: Number of parameters: 196944
+2024-07-12 10:42:46.902 INFO: Optimizer: Adam (
+Parameter Group 0
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: embedding
+    swa_lr: 0.001
+    weight_decay: 0.0
+
+Parameter Group 1
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: interactions_decay
+    swa_lr: 0.001
+    weight_decay: 5e-07
+
+Parameter Group 2
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: interactions_no_decay
+    swa_lr: 0.001
+    weight_decay: 0.0
+
+Parameter Group 3
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: products
+    swa_lr: 0.001
+    weight_decay: 5e-07
+
+Parameter Group 4
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: readouts
+    swa_lr: 0.001
+    weight_decay: 0.0
+)
+2024-07-12 10:42:46.902 INFO: Using gradient clipping with tolerance=10.000
+2024-07-12 10:42:46.902 INFO: Started training
+2024-07-12 10:43:13.437 INFO: Epoch None: loss=0.0000, MAE_E_per_atom=2.4 meV, MAE_F=3.7 meV / A
+2024-07-12 10:49:47.387 INFO: MACE version: 0.3.5
+2024-07-12 10:49:47.387 INFO: Configuration: Namespace(config=None, name='MACE', seed=123, log_dir='logs', model_dir='.', checkpoints_dir='checkpoints', results_dir='results', downloads_dir='downloads', device='cpu', default_dtype='float64', distributed=False, log_level='INFO', error_table='PerAtomMAE', model='MACE', r_max=6.0, radial_type='bessel', num_radial_basis=8, num_cutoff_basis=5, pair_repulsion=False, distance_transform='None', interaction='RealAgnosticResidualInteractionBlock', interaction_first='RealAgnosticResidualInteractionBlock', max_ell=3, correlation=3, num_interactions=2, MLP_irreps='16x0e', radial_MLP='[64, 64, 64]', hidden_irreps='128x0e + 128x1o', num_channels=64, max_L=0, gate='silu', scaling='rms_forces_scaling', avg_num_neighbors=1, compute_avg_num_neighbors=True, compute_stress=False, compute_forces=True, train_file='/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz', valid_file=None, valid_fraction=0.05, test_file='/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz', test_dir=None, multi_processed_test=False, num_workers=0, pin_memory=True, atomic_numbers=None, mean=None, std=None, statistics_file=None, E0s='average', keep_isolated_atoms=False, energy_key='energy', forces_key='force', virials_key='virials', stress_key='stress', dipole_key='dipole', charges_key='charges', loss='weighted', forces_weight=1000.0, swa_forces_weight=100.0, energy_weight=10.0, swa_energy_weight=1000.0, virials_weight=1.0, swa_virials_weight=10.0, stress_weight=1.0, swa_stress_weight=10.0, dipole_weight=1.0, swa_dipole_weight=1.0, config_type_weights='{"Default":1.0}', huber_delta=0.01, optimizer='adam', beta=0.9, batch_size=2, valid_batch_size=4, lr=0.01, swa_lr=0.001, weight_decay=5e-07, amsgrad=True, scheduler='ReduceLROnPlateau', lr_factor=0.8, scheduler_patience=15, lr_scheduler_gamma=0.9993, swa=True, start_swa=400, ema=True, ema_decay=0.99, max_num_epochs=800, patience=30, foundation_model=None, foundation_model_readout=True, eval_interval=4, keep_checkpoints=False, save_all_checkpoints=False, restart_latest=True, save_cpu=True, clip_grad=10.0, wandb=False, wandb_dir=None, wandb_project='', wandb_entity='', wandb_name='', wandb_log_hypers=['num_channels', 'max_L', 'correlation', 'lr', 'swa_lr', 'weight_decay', 'batch_size', 'max_num_epochs', 'start_swa', 'energy_weight', 'forces_weight'])
+2024-07-12 10:49:47.387 INFO: Using CPU
+2024-07-12 10:49:47.460 INFO: Current Git commit: 1c27f0862826c5dada3be5dcdade6046d55c0b2f
+2024-07-12 10:49:50.211 INFO: Since ASE version 3.23.0b1, using energy_key 'energy' is no longer safe when communicating between MACE and ASE. We recommend using a different key, rewriting energies to 'REF_energy'. You need to use --energy_key='REF_energy', to tell the key name chosen.
+2024-07-12 10:49:51.192 INFO: Since ASE version 3.23.0b1, using stress_key 'stress' is no longer safe when communicating between MACE and ASE. We recommend using a different key, rewriting energies to 'REF_stress'. You need to use --stress_key='REF_stress', to tell the key name chosen.
+2024-07-12 10:49:51.435 INFO: Loaded 18870 training configurations from '/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz'
+2024-07-12 10:49:51.436 INFO: Using random 5.0% of training set for validation
+2024-07-12 10:49:54.134 INFO: Since ASE version 3.23.0b1, using energy_key 'energy' is no longer safe when communicating between MACE and ASE. We recommend using a different key, rewriting energies to 'REF_energy'. You need to use --energy_key='REF_energy', to tell the key name chosen.
+2024-07-12 10:49:55.130 INFO: Since ASE version 3.23.0b1, using stress_key 'stress' is no longer safe when communicating between MACE and ASE. We recommend using a different key, rewriting energies to 'REF_stress'. You need to use --stress_key='REF_stress', to tell the key name chosen.
+2024-07-12 10:49:55.375 INFO: Loaded 18870 test configurations from '/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz'
+2024-07-12 10:49:55.375 INFO: Total number of configurations: train=17927, valid=943, tests=[Default: 18870]
+2024-07-12 10:49:55.430 INFO: AtomicNumberTable: (22, 41, 42, 73)
+2024-07-12 10:49:55.431 INFO: Atomic Energies not in training file, using command line argument E0s
+2024-07-12 10:49:55.431 INFO: Computing average Atomic Energies using least squares regression
+2024-07-12 10:49:55.497 INFO: Atomic energies: [-7.756691580898626, -9.967389261096464, -10.611151161443528, -11.661114063778868]
+2024-07-12 10:50:04.928 INFO: WeightedEnergyForcesLoss(energy_weight=10.000, forces_weight=1000.000)
+2024-07-12 10:50:07.781 INFO: Average number of neighbors: 20.644293179871337
+2024-07-12 10:50:07.781 INFO: Selected the following outputs: {'energy': True, 'forces': True, 'virials': False, 'stress': False, 'dipoles': False}
+2024-07-12 10:50:10.263 WARNING: Standard deviation of the scaling is zero, Changing to no scaling
+2024-07-12 10:50:10.270 INFO: Building model
+2024-07-12 10:50:10.271 INFO: Hidden irreps: 64x0e
+2024-07-12 10:50:10.859 INFO: Using stochastic weight averaging (after 400 epochs) with energy weight : 1000.0, forces weight : 100.0 and learning rate : 0.001
+2024-07-12 10:50:10.905 WARNING: Cannot find checkpoint with tag 'MACE_run-123' in 'checkpoints'
+2024-07-12 10:50:10.905 INFO: ScaleShiftMACE(
+  (node_embedding): LinearNodeEmbeddingBlock(
+    (linear): Linear(4x0e -> 64x0e | 256 weights)
+  )
+  (radial_embedding): RadialEmbeddingBlock(
+    (bessel_fn): BesselBasis(r_max=6.0, num_basis=8, trainable=False)
+    (cutoff_fn): PolynomialCutoff(p=5.0, r_max=6.0)
+  )
+  (spherical_harmonics): SphericalHarmonics()
+  (atomic_energies_fn): AtomicEnergiesBlock(energies=[-7.7567, -9.9674, -10.6112, -11.6611])
+  (interactions): ModuleList(
+    (0): RealAgnosticInteractionBlock(
+      (linear_up): Linear(64x0e -> 64x0e | 4096 weights)
+      (conv_tp): TensorProduct(64x0e x 1x0e+1x1o+1x2e+1x3o -> 64x0e+64x1o+64x2e+64x3o | 256 paths | 256 weights)
+      (conv_tp_weights): FullyConnectedNet[8, 64, 64, 64, 256]
+      (linear): Linear(64x0e+64x1o+64x2e+64x3o -> 64x0e+64x1o+64x2e+64x3o | 16384 weights)
+      (skip_tp): FullyConnectedTensorProduct(64x0e+64x1o+64x2e+64x3o x 4x0e -> 64x0e+64x1o+64x2e+64x3o | 65536 paths | 65536 weights)
+      (reshape): reshape_irreps()
+    )
+    (1): RealAgnosticResidualInteractionBlock(
+      (linear_up): Linear(64x0e -> 64x0e | 4096 weights)
+      (conv_tp): TensorProduct(64x0e x 1x0e+1x1o+1x2e+1x3o -> 64x0e+64x1o+64x2e+64x3o | 256 paths | 256 weights)
+      (conv_tp_weights): FullyConnectedNet[8, 64, 64, 64, 256]
+      (linear): Linear(64x0e+64x1o+64x2e+64x3o -> 64x0e+64x1o+64x2e+64x3o | 16384 weights)
+      (skip_tp): FullyConnectedTensorProduct(64x0e x 4x0e -> 64x0e | 16384 paths | 16384 weights)
+      (reshape): reshape_irreps()
+    )
+  )
+  (products): ModuleList(
+    (0-1): 2 x EquivariantProductBasisBlock(
+      (symmetric_contractions): SymmetricContraction(
+        (contractions): ModuleList(
+          (0): Contraction(
+            (contractions_weighting): ModuleList(
+              (0-1): 2 x GraphModule()
+            )
+            (contractions_features): ModuleList(
+              (0-1): 2 x GraphModule()
+            )
+            (weights): ParameterList(
+                (0): Parameter containing: [torch.float64 of size 4x4x64]
+                (1): Parameter containing: [torch.float64 of size 4x1x64]
+            )
+            (graph_opt_main): GraphModule()
+          )
+        )
+      )
+      (linear): Linear(64x0e -> 64x0e | 4096 weights)
+    )
+  )
+  (readouts): ModuleList(
+    (0): LinearReadoutBlock(
+      (linear): Linear(64x0e -> 1x0e | 64 weights)
+    )
+    (1): NonLinearReadoutBlock(
+      (linear_1): Linear(64x0e -> 16x0e | 1024 weights)
+      (non_linearity): Activation [x] (16x0e -> 16x0e)
+      (linear_2): Linear(16x0e -> 1x0e | 16 weights)
+    )
+  )
+  (scale_shift): ScaleShiftBlock(scale=1.000000, shift=0.000000)
+)
+2024-07-12 10:50:10.906 INFO: Number of parameters: 196944
+2024-07-12 10:50:10.906 INFO: Optimizer: Adam (
+Parameter Group 0
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: embedding
+    swa_lr: 0.001
+    weight_decay: 0.0
+
+Parameter Group 1
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: interactions_decay
+    swa_lr: 0.001
+    weight_decay: 5e-07
+
+Parameter Group 2
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: interactions_no_decay
+    swa_lr: 0.001
+    weight_decay: 0.0
+
+Parameter Group 3
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: products
+    swa_lr: 0.001
+    weight_decay: 5e-07
+
+Parameter Group 4
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: readouts
+    swa_lr: 0.001
+    weight_decay: 0.0
+)
+2024-07-12 10:50:10.907 INFO: Using gradient clipping with tolerance=10.000
+2024-07-12 10:50:10.907 INFO: Started training
+2024-07-12 10:50:35.171 INFO: Epoch None: loss=0.1134, MAE_E_per_atom=150.2 meV, MAE_F=3.7 meV / A
+2024-07-12 12:09:31.478 INFO: MACE version: 0.3.5
+2024-07-12 12:09:31.478 INFO: Configuration: Namespace(config=None, name='MACE', seed=123, log_dir='logs', model_dir='.', checkpoints_dir='checkpoints', results_dir='results', downloads_dir='downloads', device='cpu', default_dtype='float64', distributed=False, log_level='INFO', error_table='PerAtomMAE', model='MACE', r_max=5.0, radial_type='bessel', num_radial_basis=8, num_cutoff_basis=5, pair_repulsion=False, distance_transform='None', interaction='RealAgnosticResidualInteractionBlock', interaction_first='RealAgnosticResidualInteractionBlock', max_ell=3, correlation=3, num_interactions=2, MLP_irreps='16x0e', radial_MLP='[64, 64, 64]', hidden_irreps='128x0e + 128x1o', num_channels=4, max_L=0, gate='silu', scaling='rms_forces_scaling', avg_num_neighbors=1, compute_avg_num_neighbors=True, compute_stress=False, compute_forces=True, train_file='/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz', valid_file=None, valid_fraction=0.05, test_file='/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz', test_dir=None, multi_processed_test=False, num_workers=0, pin_memory=True, atomic_numbers=None, mean=None, std=None, statistics_file=None, E0s='average', keep_isolated_atoms=False, energy_key='energy', forces_key='force', virials_key='virials', stress_key='stress', dipole_key='dipole', charges_key='charges', loss='weighted', forces_weight=1000.0, swa_forces_weight=100.0, energy_weight=10.0, swa_energy_weight=1000.0, virials_weight=1.0, swa_virials_weight=10.0, stress_weight=1.0, swa_stress_weight=10.0, dipole_weight=1.0, swa_dipole_weight=1.0, config_type_weights='{"Default":1.0}', huber_delta=0.01, optimizer='adam', beta=0.9, batch_size=2, valid_batch_size=4, lr=0.01, swa_lr=0.001, weight_decay=5e-07, amsgrad=True, scheduler='ReduceLROnPlateau', lr_factor=0.8, scheduler_patience=15, lr_scheduler_gamma=0.9993, swa=True, start_swa=400, ema=True, ema_decay=0.99, max_num_epochs=20, patience=30, foundation_model=None, foundation_model_readout=True, eval_interval=4, keep_checkpoints=False, save_all_checkpoints=False, restart_latest=True, save_cpu=True, clip_grad=10.0, wandb=False, wandb_dir=None, wandb_project='', wandb_entity='', wandb_name='', wandb_log_hypers=['num_channels', 'max_L', 'correlation', 'lr', 'swa_lr', 'weight_decay', 'batch_size', 'max_num_epochs', 'start_swa', 'energy_weight', 'forces_weight'])
+2024-07-12 12:09:31.478 INFO: Using CPU
+2024-07-12 12:09:31.568 INFO: Current Git commit: 1c27f0862826c5dada3be5dcdade6046d55c0b2f
+2024-07-12 12:09:34.452 INFO: Since ASE version 3.23.0b1, using energy_key 'energy' is no longer safe when communicating between MACE and ASE. We recommend using a different key, rewriting energies to 'REF_energy'. You need to use --energy_key='REF_energy', to tell the key name chosen.
+2024-07-12 12:09:35.449 INFO: Since ASE version 3.23.0b1, using stress_key 'stress' is no longer safe when communicating between MACE and ASE. We recommend using a different key, rewriting energies to 'REF_stress'. You need to use --stress_key='REF_stress', to tell the key name chosen.
+2024-07-12 12:09:35.689 INFO: Loaded 18870 training configurations from '/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz'
+2024-07-12 12:09:35.689 INFO: Using random 5.0% of training set for validation
+2024-07-12 12:09:38.502 INFO: Since ASE version 3.23.0b1, using energy_key 'energy' is no longer safe when communicating between MACE and ASE. We recommend using a different key, rewriting energies to 'REF_energy'. You need to use --energy_key='REF_energy', to tell the key name chosen.
+2024-07-12 12:09:39.543 INFO: Since ASE version 3.23.0b1, using stress_key 'stress' is no longer safe when communicating between MACE and ASE. We recommend using a different key, rewriting energies to 'REF_stress'. You need to use --stress_key='REF_stress', to tell the key name chosen.
+2024-07-12 12:09:39.805 INFO: Loaded 18870 test configurations from '/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz'
+2024-07-12 12:09:39.805 INFO: Total number of configurations: train=17927, valid=943, tests=[Default: 18870]
+2024-07-12 12:09:39.865 INFO: AtomicNumberTable: (22, 41, 42, 73)
+2024-07-12 12:09:39.865 INFO: Atomic Energies not in training file, using command line argument E0s
+2024-07-12 12:09:39.865 INFO: Computing average Atomic Energies using least squares regression
+2024-07-12 12:09:39.933 INFO: Atomic energies: [-7.756691580898626, -9.967389261096464, -10.611151161443528, -11.661114063778868]
+2024-07-12 12:09:50.966 INFO: WeightedEnergyForcesLoss(energy_weight=10.000, forces_weight=1000.000)
+2024-07-12 12:09:53.986 INFO: Average number of neighbors: 11.911814418765092
+2024-07-12 12:09:53.987 INFO: Selected the following outputs: {'energy': True, 'forces': True, 'virials': False, 'stress': False, 'dipoles': False}
+2024-07-12 12:09:56.776 WARNING: Standard deviation of the scaling is zero, Changing to no scaling
+2024-07-12 12:09:56.784 INFO: Building model
+2024-07-12 12:09:56.784 INFO: Hidden irreps: 4x0e
+2024-07-12 12:09:57.383 INFO: Start swa must be less than max_num_epochs, got 400 > 20
+2024-07-12 12:09:57.383 INFO: Setting start swa to 15
+2024-07-12 12:09:57.384 INFO: Using stochastic weight averaging (after 15 epochs) with energy weight : 1000.0, forces weight : 100.0 and learning rate : 0.001
+2024-07-12 12:09:57.434 WARNING: Cannot find checkpoint with tag 'MACE_run-123' in 'checkpoints'
+2024-07-12 12:09:57.434 INFO: ScaleShiftMACE(
+  (node_embedding): LinearNodeEmbeddingBlock(
+    (linear): Linear(4x0e -> 4x0e | 16 weights)
+  )
+  (radial_embedding): RadialEmbeddingBlock(
+    (bessel_fn): BesselBasis(r_max=5.0, num_basis=8, trainable=False)
+    (cutoff_fn): PolynomialCutoff(p=5.0, r_max=5.0)
+  )
+  (spherical_harmonics): SphericalHarmonics()
+  (atomic_energies_fn): AtomicEnergiesBlock(energies=[-7.7567, -9.9674, -10.6112, -11.6611])
+  (interactions): ModuleList(
+    (0): RealAgnosticInteractionBlock(
+      (linear_up): Linear(4x0e -> 4x0e | 16 weights)
+      (conv_tp): TensorProduct(4x0e x 1x0e+1x1o+1x2e+1x3o -> 4x0e+4x1o+4x2e+4x3o | 16 paths | 16 weights)
+      (conv_tp_weights): FullyConnectedNet[8, 64, 64, 64, 16]
+      (linear): Linear(4x0e+4x1o+4x2e+4x3o -> 4x0e+4x1o+4x2e+4x3o | 64 weights)
+      (skip_tp): FullyConnectedTensorProduct(4x0e+4x1o+4x2e+4x3o x 4x0e -> 4x0e+4x1o+4x2e+4x3o | 256 paths | 256 weights)
+      (reshape): reshape_irreps()
+    )
+    (1): RealAgnosticResidualInteractionBlock(
+      (linear_up): Linear(4x0e -> 4x0e | 16 weights)
+      (conv_tp): TensorProduct(4x0e x 1x0e+1x1o+1x2e+1x3o -> 4x0e+4x1o+4x2e+4x3o | 16 paths | 16 weights)
+      (conv_tp_weights): FullyConnectedNet[8, 64, 64, 64, 16]
+      (linear): Linear(4x0e+4x1o+4x2e+4x3o -> 4x0e+4x1o+4x2e+4x3o | 64 weights)
+      (skip_tp): FullyConnectedTensorProduct(4x0e x 4x0e -> 4x0e | 64 paths | 64 weights)
+      (reshape): reshape_irreps()
+    )
+  )
+  (products): ModuleList(
+    (0-1): 2 x EquivariantProductBasisBlock(
+      (symmetric_contractions): SymmetricContraction(
+        (contractions): ModuleList(
+          (0): Contraction(
+            (contractions_weighting): ModuleList(
+              (0-1): 2 x GraphModule()
+            )
+            (contractions_features): ModuleList(
+              (0-1): 2 x GraphModule()
+            )
+            (weights): ParameterList(
+                (0): Parameter containing: [torch.float64 of size 4x4x4]
+                (1): Parameter containing: [torch.float64 of size 4x1x4]
+            )
+            (graph_opt_main): GraphModule()
+          )
+        )
+      )
+      (linear): Linear(4x0e -> 4x0e | 16 weights)
+    )
+  )
+  (readouts): ModuleList(
+    (0): LinearReadoutBlock(
+      (linear): Linear(4x0e -> 1x0e | 4 weights)
+    )
+    (1): NonLinearReadoutBlock(
+      (linear_1): Linear(4x0e -> 16x0e | 64 weights)
+      (non_linearity): Activation [x] (16x0e -> 16x0e)
+      (linear_2): Linear(16x0e -> 1x0e | 16 weights)
+    )
+  )
+  (scale_shift): ScaleShiftBlock(scale=1.000000, shift=0.000000)
+)
+2024-07-12 12:09:57.435 INFO: Number of parameters: 20964
+2024-07-12 12:09:57.435 INFO: Optimizer: Adam (
+Parameter Group 0
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: embedding
+    swa_lr: 0.001
+    weight_decay: 0.0
+
+Parameter Group 1
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: interactions_decay
+    swa_lr: 0.001
+    weight_decay: 5e-07
+
+Parameter Group 2
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: interactions_no_decay
+    swa_lr: 0.001
+    weight_decay: 0.0
+
+Parameter Group 3
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: products
+    swa_lr: 0.001
+    weight_decay: 5e-07
+
+Parameter Group 4
+    amsgrad: True
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.01
+    lr: 0.01
+    maximize: False
+    name: readouts
+    swa_lr: 0.001
+    weight_decay: 0.0
+)
+2024-07-12 12:09:57.435 INFO: Using gradient clipping with tolerance=10.000
+2024-07-12 12:09:57.435 INFO: Started training
+2024-07-12 12:10:03.519 INFO: Epoch None: loss=0.1129, MAE_E_per_atom=150.5 meV, MAE_F=6.7 meV / A

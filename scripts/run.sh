@@ -1,0 +1,31 @@
+    python3 /Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/mace/mace/cli/run_train.py \
+    --name="MACE" \
+    --train_file="/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz" \
+    --valid_fraction=0.05 \
+    --test_file="/Users/basit-work/Desktop/NIST/NIST_GIAN_MACE-MP-0/data/molecules.xyz" \
+    --E0s="average" \
+    --model="MACE" \
+    --num_interactions=2 \
+    --num_channels=4\
+    --max_L=0 \
+    --correlation=3 \
+    --r_max=5.0 \
+    --forces_weight=1000 \
+    --energy_weight=10 \
+    --energy_key="energy" \
+    --forces_key="force" \
+    --batch_size=2 \
+    --valid_batch_size=4 \
+    --max_num_epochs=20 \
+    --start_swa=400 \
+    --scheduler_patience=15 \
+    --patience=30 \
+    --eval_interval=4 \
+    --ema \
+    --swa \
+    --error_table='PerAtomMAE' \
+    --default_dtype="float64"\
+    --device=cpu \
+    --seed=123 \
+    --restart_latest \
+    --save_cpu \
